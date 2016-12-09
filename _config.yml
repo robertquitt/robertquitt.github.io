@@ -1,12 +1,18 @@
 # Site settings
 title: Robert's Homepage
 email: robertquitt@berkeley.edu
-description: > # this means to ignore newlines until "baseurl:"
-  Robert Quitt's homepage. Nothing special. I will write some blog posts soon.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+description: Robert's personal blog
+baseurl: ""
+url: ""
 twitter_username: coocoohead39
 github_username:  robertquitt
 
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+
 # Build settings
 markdown: kramdown
+
