@@ -1,17 +1,23 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Robert's Homepage</title>
-  </head>
-  <body>
-    <h1>Welcome!</h1>
-    <ul>
-      <li>This website was created in html.</li>
-      <li>This website is hosted by GitHub pages at <a href="https://www.github.com/robertquitt/robertquitt.github.io/">this repo.</a></li>
-      <li><a href="https://myanimelist.net/profile/robertquitt">MyAnimeList</a></li>
-    </ul>
-    <img src="assets/images/hime.png" alt="Hime!" style="width:256px">
-  </body>
-</html>
+---
+layout: default
+---
 
+<div class="home">
 
+  <h1 class="page-heading">Posts</h1>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+
+</div>
