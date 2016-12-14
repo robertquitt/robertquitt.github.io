@@ -4,10 +4,16 @@ title: About
 permalink: /about/
 ---
 
-### This site is still under construction!
+## Me
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+* I am Robert Quitt.
+* I am a freshman at UC Berkeley, studying computer science.
+* I can be reached via e-mail.
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+## This Site
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+* This website was created with [Jekyll][jekyll], an open-source blogging platform.
+* This website is hosted via GitHub pages [here][github].
+
+[jekyll]: https://jekyllrb.com/
+[github]: https://www.github.com/robertquitt/robertquitt.github.io/
