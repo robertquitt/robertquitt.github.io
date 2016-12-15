@@ -9,46 +9,54 @@ called in our Scheme interpreter.
 How many times are `scheme_eval` and `scheme_apply` called for the following?
 
 
-* `(+ 2 3 (- 4 5) 1)`:
+### `(+ 2 3 (- 4 5) 1)`
 
-		('+' 2 3 (- 4 5) 1)
-			'+'
-			2
-			3
-			('-' 4 5)
-				'-'
-				4
-				5
-				(apply #[-] '(4 5))
-			1
-			(apply #[+] '(2 3 -1 1))
+* `('+' 2 3 (- 4 5) 1)` *1*
+	* `'+'` *2*
+	* `2` *3*
+	* `3` *4*
+	* `('-' 4 5)` *5*
+		* `'-'` *6*
+		* `4` *7*
+		* `5` *8*
+		* `(apply #[-] '(4 5))` *1*
+	* `1` *9*
+	* `(apply #[+] '(2 3 -1 1))` *2*
 
+### `(begin (define (foo x) (+ x 3)) (foo (- 5 2)))`
 
-* `(begin (define (foo x) (+ x 3)) (foo (- 5 2)))`
+* `(begin (define (foo x) (+ x 3)) (foo (- 5 2)))` *1*
+	* `(define (foo x) (+ x 3))` *2*
+	* `(foo (- 5 2))` *3*
+	* `foo` *4*
+	* `(- 5 2)` *5*
+		* `-` *6*
+		* `5` *7*
+		* `2` *8*
+		* `(apply #[-] '(5 2))` *1*
+	* `(apply foo '(3))` *9*
 
-* `(define a 2)` <br>
-  `(define (b) 3)` <br>
-  `(let ((b a) (a (b))) ((lambda (x) (- x a b)) 5))`:
+### `(define a 2)` <br> `(define (b) 3)` <br> `(let ((b a) (a (b))) ((lambda (x) (- x a b)) 5))`
 
-		('define' 'a' 2)
-			2
-		('define' ('b') 'a')
-		('let' (('b' 'a') ('a' ('b'))) (('lambda' ('x') ('-' 'x' 'a' 'b')) 5))
-			'a'
-			('b')
-				'b'
-				(apply ((lambda () 3)) '())
-					3
-			(('lambda' ('x') ('-' 'x' 'a' 'b')) 5))
-				'('lambda' ('x') ('-' 'x' 'a' 'b'))
-				5
-				(apply (lambda ('x') '('-' 'x' 'a' 'b')) (5))
-					('-' 'x' 'a' 'b')
-						'-'
-						'x'
-						'a'
-						'b'
-						(apply #[-] '(5 3 2))
+* `(define a 2)` *1*
+	* `2` *2*
+* `('define' (b) a)` *3*
+* `('let' ((b a) (a (b))) ((lambda (x) (- x a b)) 5))` *4*
+	* `a` *5*
+	* `(b)` *6*
+		* `b` *7*
+		* `(apply ((lambda () 3)) '())` *1*
+			* `3` *8*
+	* `((lambda (x) (- x a b)) 5))` *9*
+		* `'(lambda (x) (- x a b))` *10*
+		* `5` *11*
+		* `(apply (lambda (x) '(- x a b)) (5))` *2*
+			* `(- x a b)` *12*
+				* `-` *13*
+				* `x` *14*
+				* `a` *15*
+				* `b` *16*
+				* `(apply #[-] '(5 3 2))` *3*
 
 A few things to note:
 
