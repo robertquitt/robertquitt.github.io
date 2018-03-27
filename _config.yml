@@ -1,10 +1,10 @@
 # Site settings
-title: Robert's Homepage
+title: Robert's Blog
 email: robertquitt@berkeley.edu
-description: Under construction!
+description: Tech and various ramblings
 baseurl: ""
 url: ""
-twitter_username: coocoohead39
+twitter_username:
 github_username:  robertquitt
 
 exclude:
@@ -12,6 +12,7 @@ exclude:
   - Gemfile.lock
   - LICENSE
   - README.md
+  - vendor
 
 # Build settings
 markdown: kramdown
