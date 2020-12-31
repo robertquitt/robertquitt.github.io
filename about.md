@@ -6,8 +6,7 @@ permalink: /about/
 
 ## Me
 
-I'm Robert, a rising junior studying computer science at UC Berkeley. As of June
-2018, I am currently working as a Software Engineering Intern at Facebook in Menlo Park.
+I'm Robert. As of December 2020, I work as a software engineer.
 
 ## My Projects
 
@@ -36,7 +35,7 @@ When I work on systems administation, I spend a lot of time `ssh`'d into remote 
 
 - [Vim][vim] for editing text effectively
 - [Tmux][tmux] for session persistence and pane splitting
-- [Ranger][ranger] for navigating filesystems effectively
+* [Mosh][mosh] for keeping ssh sessions open and stable in spite of dodgy connections
 
 To sync and track my configurations across machines, I store my [dotfiles here][dotfiles].
 
@@ -45,6 +44,7 @@ My primary programming language is Python. The standard library is so rich it br
 [dotfiles]: https://github.com/robertquitt/dotfiles/
 [ranger]: https://github.com/ranger/ranger/
 [vim]: https://www.vim.org/
+[mosh]: https://mosh.org
 [tmux]: https://en.wikipedia.org/wiki/Tmux
 
 ## My Blog
