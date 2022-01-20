@@ -64,7 +64,7 @@ The staff of the current generation could raze the infrastructure and build from
 This way, they could learn how to architect a new system, or work with an up-and-coming technology.
 When technology is failing, and there isn't a strong need to fix it, could be an indication that the technology is no longer needed.
 
-For example, in the CSUA, hardly anyone uses slack anymore, so the organization has primarily switched to discord. [1]
+For example, in the CSUA, hardly anyone uses slack anymore, so the organization has primarily switched to discord.
 In IEEE, the old Ruby on Rails website was deprecated in favor of a ReactJS one.
 
 But maybe I'm right. While change can lead to great benefits, it can also go poorly.
