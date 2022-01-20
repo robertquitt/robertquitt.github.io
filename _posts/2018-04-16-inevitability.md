@@ -83,8 +83,8 @@ So it seems like the strategy is to choose a technology that will be useful and 
 
 In 2014, the main RAID which housed all of CSUA's ftp, nfs, and mail crashed. It was a RAID 6 setup, so 2 disks had to go offline for this to happen. After the disk array went offline, it should have still been possible to recover some data. However, the disks were instead reformatted with a new filesystem, causing the data to become irrecoverable. This could have been avoided had there been alerting on the RAID health, and the data could still have been recovered had alumni been consulted on the matter. This type of event must be avoided. Decades of historical data was lost.
 
-https://www.facebook.com/groups/csuahosers/permalink/10152411168169856/
-https://www.facebook.com/groups/csuahosers/permalink/10152377861569856/
+*[Initial post and discussion about nfs being down](https://www.facebook.com/groups/csuahosers/permalink/10152377861569856/)
+*[Post-mortem report and discussion](https://www.facebook.com/groups/csuahosers/permalink/10152411168169856/)
 
 The CSUA has been, and will continue to be run by technically inexperienced undergraduates. Occasionally someone with great UNIX powers comes by and makes many things better, like mark64. But without proper maintenance, the infrastructure will fall into ruin once more, unless people make active efforts to keep things running smoothly.
 
