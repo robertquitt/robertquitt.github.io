@@ -3,23 +3,17 @@ layout: post
 title: Optimizing a C++ Backtracking Solver
 ---
 
-## Summary
-
-I 
-
-## Context
-
-Last year, someone reached out over facebook who was working on a personal programming project in C++.
+Last year, someone I know posted on Facebook with a fascinating problem.
 
 >  I've never really used C++ and I was wondering if any friends could help guide me on why my C++ program is slower than my Java program.
 
-How could this be? C++ is typically much faster than Java.
+How could this be? C++ is typically much faster than Java. Even a line-by-line rewrite from Java to C++ shouldn't be slower, right?
 
 ### The Backtracking Solver
 
-The program in question is a backtracking solver to find optimal solutions to a game. The solver was originally implemented in python, which was very slow.It took over an hour for certain game setups. The implementation was switched to Java, which was faster, but still too slow to solve the most difficult game setups in reasonable time. So then the solver was reimplemented in C++, but the C++ implementation ended up being slower than the Java implementation.
+The program in question is a backtracking solver to find optimal solutions to a game. The solver was originally implemented in python, which was very slow.It took over an hour for certain problems. The implementation was switched to Java, which was faster, but still too slow to solve the most difficult problems in any reasonable amount of time. The solver was reimplemented in C++, but the C++ implementation ended up being slower than the Java implementation.
 
-As a benchmark, we used a game setup called "fast1". fast1 had the smallest backtracking tree size (244K nodes). For comparison, the game setup with the largest backtracking tree size we could find had 848M nodes, which meant that it would take ~3,475x longer to exhaustively search. fast1 takes 1.6 seconds to solve in the Java implementation. However, the C++ implementation took 14.5 seconds, which means that it took ~9x longer than the Java implementation!
+As a benchmark, I ran the solver against a problem called "fast1". It was called fast1 because it had the fewest game states to search, at ~244K states. For comparison, the problem with the largest backtracking tree size we could find had 848M nodes, which meant that it would take ~3,475x longer to exhaustively search. fast1 takes 1.6 seconds to solve in the Java implementation. However, the C++ implementation took 14.5 seconds, which means that it took ~9x longer than the Java implementation!
 
 ## Compiler Flags
 
@@ -35,13 +29,15 @@ The -O3 flag had the most effect, but beyond that, there wasn't much change in r
 
 ## Profiling with Callgrind
 
-At this point, I began to look into the code. Having been written by a C++ beginner, the code had many problems, but it was unclear where to start, and what had the biggest impact on performance.
+At this point, I began to look at the code. Having been written by a C++ beginner, the code had many issues, but it was unclear where to start, and which issues had any impact on performance.
 
-In order to understand what the program was spending time on, I used a tool named callgrind.
+In order to understand what the program was spending time on, I used a profiling tool named callgrind.
 
 `valgrind --tool=callgrind `
 
-It adds a high overhead, in order to get accurate, function-level profiling results.
+Callgrind adds a high runtime overhead, in order to get instruction count accurate, function-level profiling results.
+
+From these results, I began to optimize the code.
 
 ### Avoid set creation and deletion
 
