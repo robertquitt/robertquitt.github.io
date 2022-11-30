@@ -32,11 +32,11 @@ Huh, what's a "Kernel command line?" It was unclear how exactly it was set, but 
 
 With my router working, and raspberry pi working, then I had to expose the rasperry pi to the world. In order to do this, I tried to set up port forwarding on my modem. This is typically a simple operation. However, Comcast makes this nigh impossible. First, I opened the router's web interface to add a port forward. I am greeted with this:
 
-(image 1)
+![image1](https://user-images.githubusercontent.com/6463052/204682828-b34ecbde-e86e-495e-a50f-6d7dbf90ece0.PNG)
 
 Ok... I don't like it but fine, I'll go along with it.
 
-(image 2)
+![image](https://user-images.githubusercontent.com/6463052/204682768-6d02c369-f3e2-481c-9dea-fe2a94695a4b.png)
 
 Are you kidding me? This is so dumb. At this point I gave up for the day. The next day, I downloaded the app and tried to add a port forward. This was not intuitive but I managed to get it to appear to work. However, the change would not take affect for about 15 minutes, during which time I had no idea how to debug. I ended up reading the forum and read dozens and dozens of complaints with this modem. 
 
