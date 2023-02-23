@@ -6,13 +6,13 @@ permalink: /about/
 
 ## Me
 
-I'm Robert. As of December 2020, I work as a software engineer.
+I'm Robert. I like to make things, on the computer or otherwise. In my time away from my computer, I enjoy long walks and nature. Lately I've been learning about ham radio and rockhounding (amateur geology).
 
 ## My Projects
 
-I'm currently working on [RoboSub][robosub], a competition to build and program an autonomous underwater vehicle.
+I've worked on [RoboSub][robosub], a competition to build and program an autonomous underwater vehicle.
 
-I've worked on various sysadmin projects with [CSUA][csua] and [UC Berkeley IEEE][ieee].
+I've worked on various sysadmin projects with [UC Berkeley CSUA][csua] and [UC Berkeley IEEE][ieee].
 
 [csua]: https://csua.berkeley.edu/
 [ieee]: https://ieee.berkeley.edu/
@@ -21,7 +21,7 @@ I've worked on various sysadmin projects with [CSUA][csua] and [UC Berkeley IEEE
 [ee123]: https://inst.eecs.berkeley.edu/~ee123/sp18/
 [robosub]: http://www.sdrobotics101.com/robosub2016/index.html
 
-## My Machines
+## My Computers
 
 See [computers].
 
@@ -35,11 +35,13 @@ When I work on systems administation, I spend a lot of time `ssh`'d into remote 
 
 - [Vim][vim] for editing text effectively
 - [Tmux][tmux] for session persistence and pane splitting
-* [Mosh][mosh] for keeping ssh sessions open and stable in spite of dodgy connections
+- [Mosh][mosh] for keeping ssh sessions open and stable in spite of dodgy connections
 
 To sync and track my configurations across machines, I store my [dotfiles here][dotfiles].
 
-My primary programming language is Python. The standard library is so rich it brings a tear to my eye.
+Lately, I've been trying out VS Code.  The remote development workflow "just works" over ssh and I'm quite happy with it so far. The editor support for working on websites is pretty nifty too.
+
+My primary programming language is Python. The standard library is so rich it brings a tear to my eye. Besides Python, I'm also familiar with C++, Java, SQL, and a few more. I've been learning Rust on and off for the past few years as well, although I haven't had much use for it yet.
 
 [dotfiles]: https://github.com/robertquitt/dotfiles/
 [ranger]: https://github.com/ranger/ranger/
