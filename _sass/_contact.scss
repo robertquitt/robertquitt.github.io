@@ -17,6 +17,9 @@
             image-rendering: pixelated;
             background-repeat: no-repeat;
         }
+        .selected {
+            border: 2px solid rgba(235, 0, 0, 0.4);
+        }
     }
 
     img {

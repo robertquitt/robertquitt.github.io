@@ -15,6 +15,8 @@ const COLS = 4;
 function puzzle() {
     let gameState = [...Array(ROWS * COLS).keys()];
     let grid = [];
+    let hasWon = false;
+    let selected = null;
 
     shuffle(gameState);
     init();
@@ -31,6 +33,16 @@ function puzzle() {
             }
         }
         win();
+    }
+    function swapTiles(pos, otherPos) {
+        swap(gameState, pos, otherPos);
+        drawTile(pos);
+        drawTile(otherPos);
+        checkWin();
+    }
+    function clearSelected() {
+        grid[selected].classList.remove("selected");
+        selected = null;
     }
     function init() {
         for (row = 0; row < ROWS; row++) {
@@ -51,11 +63,22 @@ function puzzle() {
                     e.preventDefault();
                     const fromPos = e.dataTransfer.getData("text/plain");
                     if (fromPos != pos) {
-                        swap(gameState, pos, fromPos);
-                        drawTile(pos);
-                        drawTile(fromPos);
-                        checkWin();
+                        swapTiles(pos, fromPos);
                     }
+                    clearSelected();
+                })
+                el.addEventListener("click", e => {
+                    if (selected == pos) {
+                        clearSelected();
+                        return;
+                    }
+                    if (selected == null) {
+                        e.target.classList.add("selected");
+                        selected = pos;
+                        return;
+                    }
+                    swapTiles(pos, selected);
+                    clearSelected();
                 })
                 grid.push(el);
                 container.appendChild(el);
@@ -65,7 +88,11 @@ function puzzle() {
             drawTile(i);
         }
     }
-    async function win() {
+    function win() {
+        if (hasWon) {
+            return;
+        }
+        hasWon = true;
         let el = document.createElement("img");
         el.setAttribute("src",
             atob("aHR0cHM6Ly93d3cuY3N1YS5iZXJrZWxleS5lZHUvfnJvYmVydHEvY29udGFjdF9nb29kX2pvYl9wdXp6bGVfdGltZS5wbmc")
