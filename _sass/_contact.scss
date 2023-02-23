@@ -1,0 +1,54 @@
+#contact {
+    display: grid;
+    grid-template: "hint container ." auto ". win ." auto / 1fr 8fr 1fr;
+
+    #container {
+        grid-area: container;
+        display: grid;
+        grid-template-rows: repeat(5, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+        width: 90%;
+        margin: 0 auto;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        >* {
+            background-image: url("/assets/images/hamter.png");
+            background-size: 500%;
+            image-rendering: pixelated;
+            background-repeat: no-repeat;
+        }
+    }
+
+    img {
+        grid-area: hint;
+        image-rendering: pixelated;
+        width: 100%;
+    }
+
+    .win {
+        grid-area: win;
+        image-rendering: auto;
+        margin-bottom: 60px;
+        border-radius: 15px;
+    }
+}
+
+.rainbow {
+    background:
+        linear-gradient(
+            0deg, 
+            hsl(40, 80%, 55%),
+            hsl(335, 80%, 64%),
+            hsl(40, 80%, 55%),
+            hsl(310, 80%, 75%),
+            hsl(40, 80%, 55%),
+        );
+    background-size: 200% 200%;
+    animation: a 2s linear infinite;
+
+    @keyframes a {
+    to {
+		background-position: 0% 200%;
+	}
+    }
+}

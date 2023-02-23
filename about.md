@@ -14,12 +14,15 @@ I've worked on [RoboSub][robosub], a competition to build and program an autonom
 
 I've worked on various sysadmin projects with [UC Berkeley CSUA][csua] and [UC Berkeley IEEE][ieee].
 
+For a comprehensive list, see [hacks].
+
 [csua]: https://csua.berkeley.edu/
 [ieee]: https://ieee.berkeley.edu/
 [ucb-hls]: https://github.com/ucb-hls/csp-hls
 [cs152]: https://inst.eecs.berkeley.edu/~cs152/sp18/
 [ee123]: https://inst.eecs.berkeley.edu/~ee123/sp18/
 [robosub]: http://www.sdrobotics101.com/robosub2016/index.html
+[hacks]: /hacks/
 
 ## My Computers
 
