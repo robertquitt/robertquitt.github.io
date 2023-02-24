@@ -18,7 +18,7 @@ function puzzle() {
     let hasWon = false;
     let selected = null;
 
-    shuffle(gameState);
+    // shuffle(gameState);
     init();
 
     function drawTile(pos) {
@@ -41,6 +41,9 @@ function puzzle() {
         checkWin();
     }
     function clearSelected() {
+        if (selected === null) {
+            return;
+        }
         grid[selected].classList.remove("selected");
         selected = null;
     }
@@ -93,14 +96,30 @@ function puzzle() {
             return;
         }
         hasWon = true;
-        let el = document.createElement("img");
-        el.setAttribute("src",
-            atob("aHR0cHM6Ly93d3cuY3N1YS5iZXJrZWxleS5lZHUvfnJvYmVydHEvY29udGFjdF9nb29kX2pvYl9wdXp6bGVfdGltZS5wbmc")
-        );
-        el.classList.add("win");
         let contact = document.querySelector("#contact");
         contact.classList.add("rainbow");
+
+        let el = document.createElement("div");
+        let img = document.createElement("img");
+        img.style['display'] = "none";
+        img.setAttribute("src",
+            atob("aHR0cHM6Ly93d3cuY3N1YS5iZXJrZWxleS5lZHUvfnJvYmVydHEvY29udGFjdF9nb29kX2pvYl9wdXp6bGVfdGltZS5wbmc")
+        );
+        img.addEventListener("load", async e => {
+            await sleep(1000);
+            img.style['display'] = null;
+            img.scrollIntoView({ behavior: "smooth" });
+            await sleep(500);
+            el.classList.add("spinzoom");
+        }
+        );
+        el.classList.add("win");
+
         contact.appendChild(el);
+        el.appendChild(img);
+    }
+    async function sleep(ms) {
+        await new Promise(resolve => setTimeout(resolve, ms));
     }
 }
 function swap(list, i, j) {

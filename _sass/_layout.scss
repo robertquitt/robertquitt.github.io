@@ -21,9 +21,11 @@
         url("/assets/images/crater_lake_view_2x.avif") type("image/avif") 2x,
         url("/assets/images/crater_lake_view_2x.webp") type("image/webp") 2x,
         url("/assets/images/crater_lake_view_2x.jpg") type("image/jpeg") 2x);
-    // Positioning context for the mobile navigation icon
     background-size: cover;
+    background-attachment: scroll;
     background-position-y: 66%;
+
+    // Positioning context for the mobile navigation icon
     position: relative;
 }
 

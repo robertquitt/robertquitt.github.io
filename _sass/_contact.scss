@@ -16,7 +16,9 @@
             background-size: 500%;
             image-rendering: pixelated;
             background-repeat: no-repeat;
+            background-attachment: scroll;
         }
+
         .selected {
             border: 2px solid rgba(235, 0, 0, 0.4);
         }
@@ -30,16 +32,47 @@
 
     .win {
         grid-area: win;
-        image-rendering: auto;
         margin-bottom: 60px;
-        border-radius: 15px;
+        border-radius: 25px;
+
+        >img {
+            transform: scale(0.05, 0.05);
+            image-rendering: auto;
+        }
+    }
+
+    .win.spinzoom {
+        animation: spin 2s linear;
+
+        >img {
+            animation: zoom 2s linear;
+            transform: scale(1, 1);
+        }
     }
 }
 
+
+@keyframes zoom {
+    from {
+        transform: scale(0.05, 0.05);
+        border-radius: 90%;
+    }
+
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(3turn);
+    }
+}
+
+
 .rainbow {
     background:
-        linear-gradient(
-            0deg, 
+        linear-gradient(0deg,
             hsl(40, 80%, 55%),
             hsl(335, 80%, 64%),
             hsl(40, 80%, 55%),
@@ -47,11 +80,11 @@
             hsl(40, 80%, 55%),
         );
     background-size: 200% 200%;
-    animation: a 2s linear infinite;
+    animation: scroll 2s linear infinite;
 
-    @keyframes a {
-    to {
-		background-position: 0% 200%;
-	}
+    @keyframes scroll {
+        to {
+            background-position: 0% 200%;
+        }
     }
 }
