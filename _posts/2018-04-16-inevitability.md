@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Inevitability
+title: The Inevitability of Student-run Technology Collapse
 ---
 
 # Why Tech in CS Orgs is Bound to Continually Fail, and How to Fix That
