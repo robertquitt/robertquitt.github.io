@@ -3,21 +3,21 @@ layout: post
 title: Improving Performance of a C++ Backtracking Solver
 ---
 
-Recently, an acquantance posted on Facebook with a problem.
+Recently, an acquaintance posted on Facebook with a problem.
 
 >  I've never really used C++ and I was wondering if any friends could help guide me on why my C++ program is slower than my Java program.
 
-How could this be? C++ is typically faster than Java. Instinctively I assumed that that a line-by-line rewrite from Java to C++ should be faster. I was [nerd sniped][nerd-sniping] so I reached out to help.
+How could this be? C++ is typically faster than Java. Instinctively I assumed that a line-by-line rewrite from Java to C++ should be faster. I was [nerd sniped][nerd-sniping] so I reached out to help.
 
 [nerd-sniping]: https://xkcd.com/356/
 
-The program in question is a backtracking solver to find optimal solutions to a game. In this game, you can make up to 24 moves around a grid, with 1-5 valid decisions each step. The goal is to maximize a score by gathering items and visiting locations in the grid. The solver works by searching through every possible  state until the maximum score is found. The solver was originally implemented in python, which was very slow. It took over an hour for some problem scenarios. The original author reimplemented the solver in Java, which was much faster, but it was still too slow for solving the hardest problems. The original author then reimplemented the solver in C++, but the C++ implementation ended up being slower than the Java implementation.
+The program in question is a backtracking solver to find optimal solutions to a game. In this game, you can make up to 24 moves around a grid, with 1-5 valid decisions per step. The goal is to maximize a score by gathering items and visiting locations in the grid. The solver works by searching through every possible state until the maximum score is found. The solver was originally implemented in python, which was very slow. It took over an hour for some problem scenarios. The original author reimplemented the solver in Java, which was much faster, but it was still too slow for solving the hardest problems. The original author then reimplemented the solver in C++, but the C++ implementation ended up being slower than the Java implementation.
 
 As a benchmark, we ran the solver against a problem scenario called "`fast1`". `fast1` had the fewest game states to search, at ~274K states. By contrast, the problem with the most states to search was 848M, about ~3,000x more states. Solving the `fast1` scenario took 1.6 seconds to solve in the Java implementation, while the C++ implementation took 3.5 seconds, a slowdown of ~2x!
 
 The first thing that came to mind is pass-by-value vs. pass-by-reference. Java passes objects by reference, while C++ typically objects by value, meaning that the entire object gets copied rather than just a pointer. This could explain part of the performance loss.
 
-There were many possible approaches to improving performance. In order to focus on impactful optimizations, I used a profiler. I hadn't worked on much C++ performance profiling before. Over the course of this project I learned how to use a profiling tool called callgrind.
+There were many possible approaches to improving performance. In order to focus on impactful optimizations, I used a profiler. I hadn't worked on much C++ performance profiling before. Over the course of this project, I learned how to use a profiling tool called callgrind.
 
 ## Callgrind
 
@@ -25,7 +25,7 @@ To use callgrind, I ran `valgrind --tool=callgrind ./build/solve_game ...`.
 
 Callgrind adds a very high runtime overhead (~70x slowdown in my case) in order to get instruction count accurate, function-level profiling results. One of the benefits of callgrind is that running the same code with the same parameters gives you the same results. This makes callgrind a reliable tool for gathering performance data.
 
-By default, the results are written in a file called `callgrind.out.$pid`, where `$pid` is the pid of the program that you are profiling. In order to read these files, you need to use `callgrind_annotate`. This is what the output looks like.
+By default, the callgrind write the results into a file called `callgrind.out.$pid`, where `$pid` is the pid of the program being profiled. In order to read these files, you need to use `callgrind_annotate`. This is what the output looks like.
 
 ```
 --------------------------------------------------------------------------------
@@ -83,23 +83,23 @@ Auto-annotation:  off
 ```
 
 What callgrind has done is give us per-function profiling data. `Ir` is short for "instruction." 
-So the following line means that the program took a total 13.6B instructions to execute. 
+So the following line means that the program took a total of 13.6B instructions to execute. 
 
 ```
 13,674,402,496  PROGRAM TOTALS
 ```
 
-Each line afterwards is a count of how many instructions were spent in each function. They are ordered in descending order, so functions near the top of the list contribute more to runtime. I'll go through the different optimizations that I made, based on what I saw in the profiling data.
+Each line after that is a count of how many instructions were spent in each function. They are ordered in descending order, so functions near the top of the list contribute more to runtime. I'll go through the different optimizations that I made, based on what I saw in the profiling data.
 
 ## Act 1: Death of `string`
 
-The first line indicates that the single function with most time was `malloc`.
+The first line indicates that the single function that spent the most time was `malloc`.
 
 ```
 2,408,589,654  /build/glibc-77giwP/glibc-2.24/malloc/malloc.c:_int_malloc [/lib/x86_64-linux-gnu/libc-2.24.so]
 ```
 
-The second line shows that that `memcpy` was used on strings a lot.
+The second line shows that `memcpy` was used on strings a lot.
 
 ```
 1,334,917,570  /build/glibc-77giwP/glibc-2.24/string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:__memcpy_avx_unaligned_erms [/lib/x86_64-linux-gnu/libc-2.24.so]
@@ -111,7 +111,7 @@ And a few lines down, you can also see `free`.
 1,083,047,479  /build/glibc-77giwP/glibc-2.24/malloc/malloc.c:_int_free [/lib/x86_64-linux-gnu/libc-2.24.so]
 ```
 
-So, the profiling data suggests that most of the time is spent allocating, copying, and freeing memory. If we can avoid unnessecary memory allocations, then runtime will improve.
+So, the profiling data suggests that most of the time is spent allocating, copying, and freeing memory. If we can avoid unnecessary memory allocations, then runtime will improve.
 
 In the code, strings are used extensively to represent moves or actions taken within the game. This is useful for debugging and development, but a performance killer. Every time a string is passed by value, it must be allocated and copied. So, I began to optimize the use of strings throughout the codebase.
 
@@ -136,7 +136,7 @@ struct GameState {
 }
 ```
 
-The change afterwards is simply
+The change afterward is simply
 
 ```diff
 -        GameState newGameState = GameState{newPosition, newDirection /* ... */};
@@ -152,7 +152,7 @@ By avoiding copies of strings and vectors in 1.1 and 1.2, the program gained a s
 
 ### 1.3: Replacing strings with an enum
 
-By now I realized that strings were the root of the problems, so I decided to replace them all with an enum. This means that the pass-by-value semantics aren't an issue anymore, since enums are small and don't require and dynamic memory allocation. An additional benefit of an enum is that typos become compiler errors instead of silent errors!
+By now I realized that strings were the root of the problems, so I decided to replace them all with an enum. This means that the pass-by-value semantics aren't an issue anymore, since enums are small and don't require dynamic memory allocation. An additional benefit of an enum is that typos become compiler errors instead of silent errors!
 
 Here's an example of what the changes looked like.
 
@@ -295,7 +295,7 @@ At this point, I had removed all dynamic memory allocations from the hot path, r
 
 ### 3.1: Smaller stack frames
 
-Each recursive call allocates space on the program stack for variables. By reducing the amount of space each recursive call uses, then that may improve performance due to CPU cache effects.
+Each recursive call allocates space on the program's stack for variables. By reducing the size of the stack frame, performance is increased due to less copying and better CPU cache usage.
 
 #### 3.1.1: Avoiding extra copies to stack
 
@@ -356,15 +356,15 @@ I stopped trying to get the program to run any faster because I was getting tire
 
 ## Tip: always test!
 
-When optimizing, I tended to try many different approaches. Some worked and some didn't. It's important to have a way to consistently measure the performance of the code being optimized, so that you can get feedback about whether your approach is working. Additionally, having a test for correctness helps make sure you don't accidentally break functionality as you perform your optimizations. In my case, I had a fast test case that I could quickly run and use to validate correctness.
+When optimizing, I tended to try many different approaches. Some worked and some didn't. It's important to have a way to consistently measure the performance of the code being optimized so that you can get feedback about whether your approach is working. Additionally, having a test for correctness helps make sure you don't accidentally break functionality as you perform your optimizations. In my case, I had a fast test case that I could quickly run and use to validate correctness.
 
-## Failed optimzations
+## Failed optimizations
 
 Of course, not every attempt at optimization is successful. Here are some of the things I did that *didn't* work.
 
 ### F.1 Using constrefs for passing `GameState` around
 
-To avoid copying when calling functions, I tried passing around `GameState` as `const GameState&` instead. However, the compiler likely already determined that those functions could be inlined. However, this is a just a guess since I didn't look closely into it.
+To avoid copying when calling functions, I tried passing around `GameState` as `const GameState&` instead. However, the compiler likely already determined that those functions could be inlined. However, this is just a guess since I didn't look closely into it.
 
 ### F.2 `shared_ptr<GameState>` instead of `GameState` for bestGameState
 
@@ -372,7 +372,7 @@ When storing the best game state found so far, it is stored as a `GameState` str
 
 ### F.3 Replacing `if`/`else` with `switch`
 
-There were a few places where we consider all possible values of an enum withing a big `if`/`else` statement. I replaced it with a big `switch` statement instead, but this ended up harming performance! My guess is that the branch prediction on modern CPUs are better at handling `if`/`else` than handling a jump table.
+There were a few places where we consider all possible values of an enum within a big `if`/`else` statement. I replaced it with a big `switch` statement instead, but this ended up harming performance! My guess is that the branch predictors on modern CPUs are better at handling `if`/`else` than handling a jump table.
 
 ### Nightcore
 
