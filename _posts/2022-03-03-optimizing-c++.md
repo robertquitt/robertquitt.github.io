@@ -299,7 +299,7 @@ Each recursive call allocates space on the program's stack for variables. By red
 
 #### 3.1.1: Avoiding extra copies to stack
 
-In the recursive calls, there were some `int` values being copied from the previous `GameState` into the local stack frame before being copied again into the current `GameState`. I avoided this by accessing the previous `GameState` members by reference rather than copying them to the new stack.
+In the recursive calls, there were some `int` values being copied from the previous `GameState` into the local stack frame before being copied again into the current `GameState`. I avoided this by accessing the previous `GameState` members by reference rather than copying them to the new stack frame.
 
 This led to a 6% speedup.
 
