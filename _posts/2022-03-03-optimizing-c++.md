@@ -25,7 +25,7 @@ To use callgrind, I ran `valgrind --tool=callgrind ./build/solve_game ...`.
 
 Callgrind adds a very high runtime overhead (~70x slowdown in my case) in order to get instruction count accurate, function-level profiling results. One of the benefits of callgrind is that running the same code with the same parameters gives you the same results. This makes callgrind a reliable tool for gathering performance data.
 
-By default, the callgrind write the results into a file called `callgrind.out.$pid`, where `$pid` is the pid of the program being profiled. In order to read these files, you need to use `callgrind_annotate`. This is what the output looks like.
+By default, callgrind writes the results into a file called `callgrind.out.$pid`, where `$pid` is the pid of the program being profiled. In order to read these files, you need to use `callgrind_annotate`. This is what the output looks like.
 
 ```
 --------------------------------------------------------------------------------
