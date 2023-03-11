@@ -1,14 +1,8 @@
 ---
 layout: post
-title: ChatGPT is really helpful when working on things you're unfamiliar with
+title: Overcoming Technical Limitations
 ---
 
-Typically, better than stackoverflow and google! But sometimes confidently gives totally wrong answers.
+Prime example: websites. instead of making what I know I can make, make what I can't make, have a design in mind to acheive
 
-## Improving cycle time with nginx 
-
-Problem ended up being ipv6 usage
-
-Fix was localhost -> 127.0.0.1
-
-##
+Another example: 
