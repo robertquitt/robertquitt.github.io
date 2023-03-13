@@ -18,7 +18,7 @@ function puzzle() {
     let hasWon = false;
     let selected = null;
 
-    // shuffle(gameState);
+    shuffle(gameState);
     init();
 
     function drawTile(pos) {
